@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema({
     required: [true],
     minlength: 5,
   },
+  role: {
+    type: String,
+    enum: ["super-admin", "admin", "employee"],
+  },
 });
 
 userSchema.pre("save", async function (next) {

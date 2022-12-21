@@ -17,7 +17,11 @@ const createSendToken = (id, res, statusCode) => {
 };
 
 exports.signUp = catchError(async (req, res, next) => {
-  const user = await User.create(req.body);
+  const user = await User.create({
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password,
+  });
   createSendToken(user.id, res, 200);
 });
 
@@ -31,7 +35,7 @@ exports.logIn = catchError(async (req, res, next) => {
   createSendToken(user.id, res, 200);
 });
 
-exports.protect = (req, res, next) => {
+exports.protect = catchError(async (req, res, next) => {
   let token;
   if (
     req.headers.authorization &&
@@ -40,9 +44,22 @@ exports.protect = (req, res, next) => {
     token = req.headers.authorization.split(" ")[1];
   }
   if (!token) {
-    return next(new createError("Invalid Token"));
+    return next(new createError("Not Logged in"));
   }
 
-  const verify = jwt.verify(token, process.env.JWT_PAYLOAD);
+  const verify = await jwt.verify(token, process.env.JWT_PAYLOAD);
+  const user = await User.findById(verify);
+  if (!user) return next(new createError("Login again", 400));
+
+  req.user = user;
   next();
+});
+
+exports.verify = function (...roles) {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return next(new createError("You are not authorized", 400));
+    }
+    next();
+  };
 };
