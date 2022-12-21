@@ -9,12 +9,14 @@ userRouter.post("/signup", authController.signUp);
 userRouter.post("/logIn", authController.logIn);
 
 userRouter.use(protect);
+userRouter.patch("/me", authController.updateMe);
+userRouter.use(authController.verify("super-admin"));
 userRouter.route("/createUser").post(userController.createUser);
-userRouter.get("/allUsers", authController.protect, userController.getAllUsers);
+userRouter.get("/allUsers", userController.getAllUsers);
 userRouter
   .route("/:id")
-  .get(authController.verify("super-admin"), userController.getUser)
-  .patch(authController.verify("super-admin"), userController.updateUser)
-  .delete(authController.verify("super-admin"), userController.deleteUser);
+  .get(userController.getUser)
+  .patch(userController.updateUser)
+  .delete(userController.deleteUser);
 
 module.exports = userRouter;

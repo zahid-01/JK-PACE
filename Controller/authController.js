@@ -35,6 +35,26 @@ exports.logIn = catchError(async (req, res, next) => {
   createSendToken(user.id, res, 200);
 });
 
+exports.updateMe = catchError(async (req, res, next) => {
+  console.log("HIT");
+  const me = await User.findByIdAndUpdate(
+    req.user.id,
+    {
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+    },
+    { new: true, runValidators: true }
+  );
+
+  res.status(200).json({
+    status: "Success",
+    data: {
+      data: me,
+    },
+  });
+});
+
 exports.protect = catchError(async (req, res, next) => {
   let token;
   if (
