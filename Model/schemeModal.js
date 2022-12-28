@@ -70,6 +70,22 @@ const schemeSchema = new mongoose.Schema({
     enum: ["new", "ongoing"],
   },
   requestAuthority: String,
+  officer: {
+    type: mongoose.Schema.ObjectId,
+    ref: "users",
+  },
+});
+
+schemeSchema.methods.inspOfficer = function (id) {
+  this.officer = id;
+};
+
+schemeSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "officer",
+    select: "-_id",
+  });
+  next();
 });
 
 const Scheme = mongoose.model("scheme", schemeSchema);

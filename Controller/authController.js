@@ -29,14 +29,13 @@ exports.logIn = catchError(async (req, res, next) => {
   const { email, password } = req.body;
   if (!email || !password)
     return next(new createError("Provide Credentials", 501));
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).select("password");
   const check = await user?.verifyPassword(password, user.password);
   if (!user || !check) return next(new createError("Invalid credentials", 400));
   createSendToken(user.id, res, 200);
 });
 
 exports.updateMe = catchError(async (req, res, next) => {
-  console.log("HIT");
   const me = await User.findByIdAndUpdate(
     req.user.id,
     {
@@ -83,3 +82,5 @@ exports.verify = function (...roles) {
     next();
   };
 };
+
+// exports.forgotPassword =
