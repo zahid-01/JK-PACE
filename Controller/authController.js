@@ -1,17 +1,23 @@
-const User = require("../Model/userModel");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const { catchError } = require("../utils/asyncCatch");
-const createError = require("../utils/createError");
+const User = require('../Model/userModel');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const { catchError } = require('../utils/asyncCatch');
+const createError = require('../utils/createError');
 
-const createSendToken = (id, res, statusCode) => {
+const createSendToken = (id, res, statusCode, req) => {
   const token = jwt.sign(id, process.env.JWT_PAYLOAD);
 
-  res.cookie("jwt", token);
+  res.cookie('jwt', token, {
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+    ),
+    httpOnly: true,
+    secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+  });
   res.status(statusCode).json({
     data: {
       token: token,
-      status: "Success",
+      status: 'Success',
     },
   });
 };
@@ -22,17 +28,17 @@ exports.signUp = catchError(async (req, res, next) => {
     email: req.body.email,
     password: req.body.password,
   });
-  createSendToken(user.id, res, 200);
+  createSendToken(user.id, res, 200, req);
 });
 
 exports.logIn = catchError(async (req, res, next) => {
   const { email, password } = req.body;
   if (!email || !password)
-    return next(new createError("Provide Credentials", 501));
-  const user = await User.findOne({ email }).select("password");
+    return next(new createError('Provide Credentials', 501));
+  const user = await User.findOne({ email }).select('password');
   const check = await user?.verifyPassword(password, user.password);
-  if (!user || !check) return next(new createError("Invalid credentials", 400));
-  createSendToken(user.id, res, 200);
+  if (!user || !check) return next(new createError('Invalid credentials', 400));
+  createSendToken(user.id, res, 200, req);
 });
 
 exports.updateMe = catchError(async (req, res, next) => {
@@ -47,7 +53,7 @@ exports.updateMe = catchError(async (req, res, next) => {
   );
 
   res.status(200).json({
-    status: "Success",
+    status: 'Success',
     data: {
       data: me,
     },
@@ -58,17 +64,17 @@ exports.protect = catchError(async (req, res, next) => {
   let token;
   if (
     req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
+    req.headers.authorization.startsWith('Bearer')
   ) {
-    token = req.headers.authorization.split(" ")[1];
+    token = req.headers.authorization.split(' ')[1];
   }
   if (!token) {
-    return next(new createError("Not Logged in"));
+    return next(new createError('Not Logged in'));
   }
 
   const verify = await jwt.verify(token, process.env.JWT_PAYLOAD);
   const user = await User.findById(verify);
-  if (!user) return next(new createError("Login again", 400));
+  if (!user) return next(new createError('Login again', 400));
 
   req.user = user;
   next();
@@ -77,7 +83,7 @@ exports.protect = catchError(async (req, res, next) => {
 exports.verify = function (...roles) {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
-      return next(new createError("You are not authorized", 400));
+      return next(new createError('You are not authorized', 400));
     }
     next();
   };
