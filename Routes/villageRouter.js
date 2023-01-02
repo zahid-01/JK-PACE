@@ -5,13 +5,16 @@ const villageController = require('../Controller/villageController');
 villageRouter.use(protect, verify('super-admin'));
 
 villageRouter
+  .route('/villagesInBlock')
+  .get(villageController.getVilagesInBlock);
+villageRouter
   .route('/:id')
-  .patch(villageController.updateBlock)
-  .delete(villageController.deleteBlock)
-  .get(villageController.getBlock);
+  .patch(villageController.updateVillage)
+  .delete(villageController.deleteVillage)
+  .get(villageController.getVillage);
 villageRouter
   .route('/')
-  .post(villageController.addBlock)
-  .get(villageController.getAllBlocks);
+  .post(villageController.addVillage)
+  .get(villageController.getAllVillages);
 
 module.exports = villageRouter;
