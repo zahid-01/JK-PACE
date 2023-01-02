@@ -5,6 +5,7 @@ const schemeRouter = require('./Routes/schemeRouter');
 const distRouter = require('./Routes/districtRoutes');
 const blockRouter = require('./Routes/blockRouter');
 const villageRouter = require('./Routes/villageRouter');
+const viewsRouter = require('./Routes/viewsRouter');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const errorcontroller = require('./Controller/errController');
@@ -27,9 +28,7 @@ app.use('/jkegov/user', userRouter);
 app.use('/jkegov/districts', distRouter);
 app.use('/jkegov/blocks', blockRouter);
 app.use('/jkegov/villages', villageRouter);
-app.use('/', (req, res) => {
-  res.status(200).render('homePage');
-});
+app.use('/', viewsRouter);
 app.use(errorcontroller);
 
 module.exports = app;
