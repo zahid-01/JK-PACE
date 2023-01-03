@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const { catchError } = require('../utils/asyncCatch');
 const createError = require('../utils/createError');
 
-const createSendToken = (id, res, statusCode, req) => {
+const createSendToken = (id, res, statusCode, req, user) => {
   const token = jwt.sign(id, process.env.JWT_PAYLOAD);
 
   res.cookie('jwt', token, {
@@ -18,6 +18,7 @@ const createSendToken = (id, res, statusCode, req) => {
     data: {
       token: token,
       status: 'Success',
+      user,
     },
   });
 };
@@ -38,7 +39,7 @@ exports.logIn = catchError(async (req, res, next) => {
   const user = await User.findOne({ email }).select('password');
   const check = await user?.verifyPassword(password, user.password);
   if (!user || !check) return next(new createError('Invalid credentials', 400));
-  createSendToken(user.id, res, 200, req);
+  createSendToken(user.id, res, 200, req, user);
 });
 
 exports.updateMe = catchError(async (req, res, next) => {

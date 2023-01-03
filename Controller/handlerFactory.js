@@ -1,4 +1,3 @@
-const { Model } = require('mongoose');
 const { catchError } = require('../utils/asyncCatch');
 const createError = require('../utils/createError');
 
