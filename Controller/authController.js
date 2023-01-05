@@ -1,8 +1,9 @@
 const User = require('../Model/userModel');
-const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const { catchError } = require('../utils/asyncCatch');
 const createError = require('../utils/createError');
+const Email = require('../utils/email');
 
 const createSendToken = (id, res, statusCode, req, user) => {
   const token = jwt.sign(id, process.env.JWT_PAYLOAD);
@@ -63,6 +64,7 @@ exports.updateMe = catchError(async (req, res, next) => {
 
 exports.protect = catchError(async (req, res, next) => {
   let token;
+  // console.log(req.headers);
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
@@ -90,4 +92,52 @@ exports.verify = function (...roles) {
   };
 };
 
-// exports.forgotPassword =
+exports.forgotPassword = catchError(async (req, res, next) => {
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) return next(new createError('No user with that email found', 401));
+  const resetToken = user?.genResetToken();
+  await user.save({ runValidators: false });
+
+  const resetUrl = `${req.protocol}://${req.get(
+    'host'
+  )}/jkegov/user/resetPassword/${resetToken}`;
+
+  try {
+    await new Email(user, resetUrl).sendPasswordReset();
+
+    res.status(200).json({
+      status: 'Success',
+      message: 'Token sent to your email',
+    });
+  } catch (err) {
+    console.log(err);
+    user.passwordResetToken = undefined;
+    user.passwordReseTokenExpires = undefined;
+    user.save({ validateBeforeSave: false });
+
+    return next(new createError('Sending email failed', 500));
+  }
+});
+
+exports.resetPassword = catchError(async (req, res, next) => {
+  console.log('Hit');
+  const hashedToken = crypto
+    .createHash('sha256')
+    .update(req.params.token)
+    .digest('hex');
+  const user = await User.findOne({
+    passwordResetToken: hashedToken,
+    passwordReseTokenExpires: { $gt: Date.now() },
+  });
+  if (!user) return next(new createError('Invalid token', 403));
+
+  if (!req.body.password || !req.body.passwordConfirm) {
+    return next(new createError('Enter Password and Confirm Passsword', 400));
+  }
+  user.password = req.body.password;
+  user.passwordResetToken = undefined;
+  user.passwordReseTokenExpires = undefined;
+  await user.save();
+
+  createSendToken(user.id, res, 200, req, user);
+});

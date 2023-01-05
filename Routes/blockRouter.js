@@ -4,6 +4,7 @@ const blockController = require('../Controller/blockController');
 
 blockRouter.use(protect, verify('super-admin'));
 
+blockRouter.route('/blocksInDistrict').get(blockController.blocksInDistrict);
 blockRouter
   .route('/:id')
   .patch(blockController.updateBlock)
