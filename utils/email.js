@@ -18,7 +18,8 @@ module.exports = class Email {
     });
   }
 
-  async sendEmail(template, subject) {
+  async sendEmail(template, subject, ...credentials) {
+    console.log(credentials);
     let mailOPtions;
     if (template === 'passwordReset') {
       mailOPtions = {
@@ -32,7 +33,7 @@ module.exports = class Email {
       mailOPtions = {
         from: this.from,
         to: this.to,
-        html: 'Welcome to JK PACE, please find your credentials attatched',
+        html: `Welcome to JK PACE, please find your credentials attatched\n Username: ${credentials[0]}\n Password: ${credentials[1]}`,
         subject,
       };
     }
@@ -41,8 +42,8 @@ module.exports = class Email {
     await this.newTransporter().sendMail(mailOPtions);
   }
 
-  async sendWelcome() {
-    await this.sendEmail('welcome', 'Welcome to natours!');
+  async sendWelcome(username, password) {
+    await this.sendEmail('welcome', 'Welcome to JK PACE!', username, password);
   }
 
   async sendPasswordReset() {

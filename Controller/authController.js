@@ -30,6 +30,10 @@ exports.signUp = catchError(async (req, res, next) => {
     email: req.body.email,
     password: req.body.password,
   });
+  await new Email(user, 'Welcome').sendWelcome(
+    req.body.email,
+    req.body.password
+  );
   createSendToken(user.id, res, 200, req);
 });
 
@@ -120,7 +124,6 @@ exports.forgotPassword = catchError(async (req, res, next) => {
 });
 
 exports.resetPassword = catchError(async (req, res, next) => {
-  console.log('Hit');
   const hashedToken = crypto
     .createHash('sha256')
     .update(req.params.token)
