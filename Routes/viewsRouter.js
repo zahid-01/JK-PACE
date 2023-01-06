@@ -5,8 +5,7 @@ const authCntrl = require('../Controller/authController');
 
 // viewsRouter.use(authCntrl.protect);
 viewsRouter.route('/sign-up').get(viewsCntrl.signUp);
-viewsRouter.route('/log-in').get(viewsCntrl.logIn);
-viewsRouter.route('/').get(viewsCntrl.home);
+viewsRouter.route('/').get(viewsCntrl.logIn);
 viewsRouter.get('/fill-form', authCntrl.protect, viewsCntrl.ulbForm);
 
 module.exports = viewsRouter;

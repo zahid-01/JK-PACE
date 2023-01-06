@@ -3,7 +3,7 @@ exports.signUp = (req, res) => {
 };
 
 exports.logIn = (req, res) => {
-  res.status(200).render('login');
+  res.status(200).render('logIn');
 };
 
 exports.home = (req, res) => {

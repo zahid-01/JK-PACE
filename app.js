@@ -18,7 +18,15 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(cors());
+app.enable('trust proxy');
+app.use(
+  cors({
+    credentials: true,
+    origin: 'http://localhost:3000',
+  })
+);
+app.options('*', cors());
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan('dev'));
