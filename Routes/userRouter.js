@@ -11,6 +11,7 @@ userRouter.post('/forgotPassword', authController.forgotPassword);
 userRouter.patch('/resetPassword/:token', authController.resetPassword);
 
 userRouter.use(protect);
+userRouter.get('/getMe', authController.getMe);
 userRouter.patch('/me', authController.updateMe);
 userRouter.use(authController.verify('super-admin'));
 userRouter.route('/createUser').post(userController.createUser);

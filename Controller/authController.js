@@ -147,3 +147,10 @@ exports.resetPassword = catchError(async (req, res, next) => {
 
   createSendToken(user.id, res, 200, req, user);
 });
+
+exports.getMe = catchError(async (req, res) => {
+  res.status(200).json({
+    status: 'Success',
+    user: req.user,
+  });
+});
