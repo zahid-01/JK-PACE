@@ -20,9 +20,9 @@ const createSendToken = (id, res, statusCode, req, user) => {
   });
   res.status(statusCode).json({
     data: {
-      token: token,
       status: 'Success',
-      user,
+      message: 'Logged in successfully',
+      token: token,
     },
   });
 };
@@ -153,4 +153,15 @@ exports.getMe = catchError(async (req, res) => {
     status: 'Success',
     user: req.user,
   });
+});
+
+exports.updatePassword = catchError(async (req, res) => {
+  const password = req.body.password;
+
+  req.user.password = password;
+  req.user.save();
+
+  res
+    .status(200)
+    .json({ status: 'Success', message: 'Password changed successfully' });
 });

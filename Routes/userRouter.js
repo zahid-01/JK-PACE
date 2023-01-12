@@ -11,6 +11,7 @@ userRouter.post('/forgotPassword', authController.forgotPassword);
 userRouter.patch('/resetPassword/:token', authController.resetPassword);
 
 userRouter.use(protect);
+userRouter.post('/updatePassword', authController.updatePassword);
 userRouter.get('/getMe', authController.getMe);
 userRouter.patch('/me', authController.updateMe);
 userRouter.use(authController.verify('super-admin'));
@@ -21,5 +22,5 @@ userRouter
   .get(userController.getUser)
   .patch(userController.updateUser)
   .delete(userController.deleteUser);
-
+userRouter.get('/filterUser/:filterUser', userController.filterUsers);
 module.exports = userRouter;

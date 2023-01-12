@@ -28,6 +28,7 @@ const userSchema = new mongoose.Schema({
   designation: {
     type: String,
   },
+  department: { type: String, required: [true, 'Provide designation'] },
   username: String,
   passwordResetToken: String,
   passwordReseTokenExpires: Date,
