@@ -54,13 +54,16 @@ exports.getUser = catchError(async (req, res, next) => {
 });
 
 exports.filterUsers = catchError(async (req, res) => {
-  const filterObj = req.params.filterUser;
-  const users = await User.find({ role: filterObj });
+  console.log(req.params);
+  const admin = await User.find({ role: req.params.admin });
+  const superAdmin = await User.find({ role: req.params.admin });
+
   res.status(200).json({
-    count: users.length,
+    adminCount: admin.length,
+    superAdminCount: superAdmin.length,
     users: {
-      users,
+      admin,
+      superAdmin,
     },
   });
-  // const users = await User.find(filterObj)
 });
