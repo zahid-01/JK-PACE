@@ -22,5 +22,5 @@ userRouter
   .get(userController.getUser)
   .patch(userController.updateUser)
   .delete(userController.deleteUser);
-userRouter.get('/filterUser/:admin/:super-admin', userController.filterUsers);
+userRouter.get('/filterUser/:filter1/:filter2', userController.filterUsers);
 module.exports = userRouter;
