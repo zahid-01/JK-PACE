@@ -31,7 +31,7 @@ exports.updateOne = (Model) =>
     const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
       runValidators: true,
       new: true,
-    });
+    }).select('-password');
 
     if (!doc) return next(new createError('No record found', 404));
 
@@ -50,9 +50,6 @@ exports.deleteOne = (Model) =>
 
     res.status(204).json({
       status: 'Success',
-      data: {
-        data: doc,
-      },
     });
   });
 
@@ -63,7 +60,7 @@ exports.findAll = (Model) =>
     res.status(200).json({
       status: 'Success',
       data: {
-        data: doc,
+        doc,
       },
     });
   });

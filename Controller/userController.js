@@ -1,57 +1,12 @@
 const User = require('../Model/userModel');
 const { catchError } = require('../utils/asyncCatch');
-const createError = require('../utils/createError');
+const handlerFactory = require('./handlerFactory');
 
-exports.createUser = catchError(async (req, res, next) => {
-  const user = await User.create(req.body);
-
-  res.status(200).json({
-    status: 'Success',
-    data: {
-      user,
-    },
-  });
-});
-
-exports.getAllUsers = catchError(async (req, res, next) => {
-  const users = await User.find();
-
-  res.status(200).json({
-    status: 'Success',
-    data: {
-      users,
-    },
-  });
-});
-
-exports.deleteUser = catchError(async (req, res, next) => {
-  await User.findByIdAndDelete(req.params.id);
-  res.status(204).json({});
-});
-
-exports.updateUser = catchError(async (req, res, next) => {
-  const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  }).select('-password');
-
-  res.status(200).json({
-    status: 'Success',
-    data: {
-      data: user,
-    },
-  });
-});
-
-exports.getUser = catchError(async (req, res, next) => {
-  const user = await User.findById(req.params.id);
-  res.status(200).json({
-    status: 'Success',
-    data: {
-      data: user,
-    },
-  });
-});
+exports.createUser = handlerFactory.createOne(User);
+exports.getUser = handlerFactory.readOne(User);
+exports.getAllUsers = handlerFactory.findAll(User);
+exports.deleteUser = handlerFactory.deleteOne(User);
+exports.updateUser = handlerFactory.updateOne(User);
 
 exports.filterUsers = catchError(async (req, res) => {
   console.log(req.params);
@@ -59,14 +14,12 @@ exports.filterUsers = catchError(async (req, res) => {
     .select('username')
     .select('designation')
     .select('department')
-    .select('role')
-    .select('-_id');
+    .select('role');
   const superAdmin = await User.find({ role: req.params.filter2 })
     .select('username')
     .select('designation')
     .select('department')
-    .select('role')
-    .select('-_id');
+    .select('role');
 
   res.status(200).json({
     adminCount: admin.length,
@@ -75,5 +28,15 @@ exports.filterUsers = catchError(async (req, res) => {
       admin,
       superAdmin,
     },
+  });
+});
+
+exports.getDepartmentUser = catchError(async (req, res) => {
+  const department = req.params.dept.toUpperCase();
+  const users = await User.find({ department });
+
+  res.status(200).json({
+    status: 'Success',
+    users,
   });
 });

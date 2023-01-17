@@ -1,4 +1,5 @@
 const Department = require('../Model/departmentModel');
+const { catchError } = require('../utils/asyncCatch');
 const handlerFactory = require('./handlerFactory');
 
 exports.createDepartment = handlerFactory.createOne(Department);
