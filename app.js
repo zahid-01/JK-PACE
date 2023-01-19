@@ -14,18 +14,30 @@ const path = require('path');
 
 const app = express();
 
-app.set('view engine', 'pug');
-app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.enable('trust proxy');
+// app.use(
+//   cors({
+//     credentials: true,
+//     origin: 'http://localhost:3000',
+//     // origin: 'http://localhost:5000',
+//     // origin: '*',
+//     // origin: 'https://jkpace-poni.onrender.com',
+//     // origin: true,
+//   })
+// );
 app.use(
   cors({
+    origin: [
+      'http://localhost:3000',
+      'http://localhost:5000',
+      'https://jkpace-poni.onrender.com',
+    ],
     credentials: true,
-    // origin: 'http://localhost:3000',
-    origin: '*',
   })
 );
+
 app.options('*', cors());
 
 app.use(express.json());
