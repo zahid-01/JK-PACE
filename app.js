@@ -33,6 +33,7 @@ app.use(
       'http://localhost:3000',
       'http://localhost:5000',
       'https://jkpace-poni.onrender.com',
+      'https://jkpace.netlify.app/',
     ],
     credentials: true,
   })
