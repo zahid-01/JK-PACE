@@ -1,15 +1,15 @@
-const app = require("./app");
-const dotenv = require("dotenv");
-const mongoose = require("mongoose");
+const app = require('./app');
+const dotenv = require('dotenv');
+const mongoose = require('mongoose');
 
-dotenv.config({ path: "./config.env" });
+dotenv.config({ path: './config.env' });
 
 mongoose
-  .connect(process.env.DATABASE_LOCAL, {
+  .connect(process.env.DATABASE_CLOUD, {
     useNewUrlParser: true,
   })
   .then(() => {
-    console.log("DB connection successful");
+    console.log('DB connection successful');
   });
 
 app.listen(process.env.PORT, () => {
