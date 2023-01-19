@@ -71,7 +71,7 @@ exports.updateMe = catchError(async (req, res, next) => {
 
 exports.protect = catchError(async (req, res, next) => {
   let token;
-  // console.log(req.headers);
+  console.log(req.headers);
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
