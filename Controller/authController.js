@@ -15,8 +15,8 @@ const createSendToken = (id, res, statusCode, req, user) => {
     ),
     httpOnly: true,
     sameSite: 'none',
-    // secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
-    secure: true,
+    secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+    // secure: true,
   });
   res.status(statusCode).json({
     data: {
@@ -71,7 +71,7 @@ exports.updateMe = catchError(async (req, res, next) => {
 
 exports.protect = catchError(async (req, res, next) => {
   let token;
-  console.log(req.headers);
+  console.log(req.headers.cookie);
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
