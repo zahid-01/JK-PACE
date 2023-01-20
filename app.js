@@ -14,19 +14,9 @@ const path = require('path');
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/public')));
 
 app.enable('trust proxy');
-// app.use(
-//   cors({
-//     credentials: true,
-//     origin: 'http://localhost:3000',
-//     // origin: 'http://localhost:5000',
-//     // origin: '*',
-//     // origin: 'https://jkpace-poni.onrender.com',
-//     // origin: true,
-//   })
-// );
 app.use(
   cors({
     origin: [
@@ -34,6 +24,7 @@ app.use(
       'http://localhost:5000',
       'https://jkpace-poni.onrender.com',
       'https://jkpace.netlify.app',
+      'https://jkpace-cgop.onrender.com',
     ],
     credentials: true,
   })
