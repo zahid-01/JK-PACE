@@ -24,7 +24,7 @@ app.use(
       'http://localhost:5000',
       'https://jkpace-poni.onrender.com',
       'https://jkpace.netlify.app',
-      'https://jkpace-cgop.onrender.com',
+      'https://radiant-torte-41dbd7.netlify.app',
     ],
     credentials: true,
   })
