@@ -80,7 +80,7 @@ exports.protect = catchError(async (req, res, next) => {
   if (req.headers.cookie) {
     token = req.headers.cookie.split('=')[1];
   }
-  console.log(req.headers.cookie.split('=')[1]);
+
   if (!token) {
     return next(new createError('Not Logged in'));
   }
