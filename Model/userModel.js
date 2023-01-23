@@ -23,7 +23,14 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['super-admin', 'admin', 'employee'],
+    enum: [
+      'super-user',
+      'departmental-officer',
+      'divisional-kashmir',
+      'divisional-jammu',
+      'district',
+      'block-tehsil',
+    ],
   },
   designation: {
     type: String,

@@ -6,6 +6,7 @@ const distRouter = require('./Routes/districtRoutes');
 const blockRouter = require('./Routes/blockRouter');
 const villageRouter = require('./Routes/villageRouter');
 const departmentRouter = require('./Routes/departmentRouter');
+const messageRouter = require('./Routes/messageRouter');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const errorcontroller = require('./Controller/errController');
@@ -42,6 +43,7 @@ app.use('/jkegov/districts', distRouter);
 app.use('/jkegov/blocks', blockRouter);
 app.use('/jkegov/villages', villageRouter);
 app.use('/jkegov/departments', departmentRouter);
+app.use('/jkegov/messages', messageRouter);
 app.use(errorcontroller);
 
 module.exports = app;
