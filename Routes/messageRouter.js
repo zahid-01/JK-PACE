@@ -8,4 +8,6 @@ messageRouter
   .post(messageController.createMessage)
   .get(messageController.readMessages);
 
+messageRouter.get('/getMessage/:dept', messageController.readDepartmentMessage);
+
 module.exports = messageRouter;
