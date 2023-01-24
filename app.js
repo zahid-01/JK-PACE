@@ -12,9 +12,13 @@ const morgan = require('morgan');
 const errorcontroller = require('./Controller/errController');
 const cors = require('cors');
 const path = require('path');
+const xss = require('xss-clean');
+const sanitize = require('express-mongo-sanitize');
 
 const app = express();
 
+app.use(xss());
+app.use(sanitize());
 app.use(express.static(path.join(__dirname, '/public')));
 
 app.enable('trust proxy');

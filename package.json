@@ -18,16 +18,19 @@
     "crypto": "^1.0.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "express-mongo-sanitize": "^2.2.0",
     "js": "^0.1.0",
     "json-parser": "^3.1.2",
     "jsonwebtoken": "^8.5.1",
     "mailtrap": "^3.0.1",
+    "mongo-sanitize": "^1.1.0",
     "mongoose": "^6.8.0",
     "morgan": "^1.10.0",
     "nodemailer": "^6.8.0",
     "nodemon": "^2.0.20",
     "path": "^0.12.7",
     "pug": "^3.0.2",
-    "validator": "^13.7.0"
+    "validator": "^13.7.0",
+    "xss-clean": "^0.1.1"
   }
 }
