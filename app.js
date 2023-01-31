@@ -30,7 +30,7 @@ app.use(
       'https://jkpace-poni.onrender.com',
       'https://jkpace.netlify.app',
       'https://radiant-torte-41dbd7.netlify.app',
-      'https://duffersolutions.com/',
+      'https://duffersolutions.com',
     ],
     credentials: true,
   })
