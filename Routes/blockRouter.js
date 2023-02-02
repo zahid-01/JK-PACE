@@ -2,7 +2,7 @@ const blockRouter = require('express').Router();
 const { protect, verify } = require('../Controller/authController');
 const blockController = require('../Controller/blockController');
 
-blockRouter.use(protect, verify('super-admin'));
+blockRouter.use(protect, verify('super-user'));
 
 blockRouter.route('/blocksInDistrict').get(blockController.blocksInDistrict);
 blockRouter

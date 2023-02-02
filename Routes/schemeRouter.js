@@ -1,12 +1,12 @@
-const express = require("express");
+const express = require('express');
 
 const schemeRouter = express.Router();
-const schemeController = require("../Controller/schemaController");
-const authControler = require("../Controller/authController");
+const schemeController = require('../Controller/schemaController');
+const authControler = require('../Controller/authController');
 
-schemeRouter.use(authControler.protect, authControler.verify("super-admin"));
+schemeRouter.use(authControler.protect, authControler.verify('super-user'));
 schemeRouter
-  .route("/schemeUser")
+  .route('/schemeUser')
   .post(schemeController.createScheme)
   .get(schemeController.getSchemes);
 

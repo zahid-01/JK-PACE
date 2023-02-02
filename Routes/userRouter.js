@@ -14,7 +14,7 @@ userRouter.use(protect);
 userRouter.post('/updatePassword', authController.updatePassword);
 userRouter.get('/getMe', authController.getMe);
 userRouter.patch('/me', authController.updateMe);
-userRouter.use(authController.verify('super-admin'));
+userRouter.use(authController.verify('super-user'));
 userRouter.route('/createUser').post(userController.createUser);
 userRouter.get('/allUsers', userController.getAllUsers);
 userRouter

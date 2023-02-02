@@ -2,7 +2,7 @@ const villageRouter = require('express').Router();
 const { protect, verify } = require('../Controller/authController');
 const villageController = require('../Controller/villageController');
 
-villageRouter.use(protect, verify('super-admin'));
+villageRouter.use(protect, verify('super-user'));
 
 villageRouter
   .route('/villagesInBlock')

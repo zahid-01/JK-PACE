@@ -3,7 +3,7 @@ const authController = require('../Controller/authController');
 const { protect, verify } = require('../Controller/authController');
 const distController = require('../Controller/districtController');
 
-distRouter.use(protect, verify('super-admin'));
+distRouter.use(protect, verify('super-user'));
 
 distRouter
   .route('/:id')

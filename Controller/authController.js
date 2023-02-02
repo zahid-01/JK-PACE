@@ -32,6 +32,7 @@ exports.signUp = catchError(async (req, res, next) => {
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
+    phone: req.body.phone,
   });
   await new Email(user, 'Welcome').sendWelcome(
     req.body.email,
@@ -41,10 +42,10 @@ exports.signUp = catchError(async (req, res, next) => {
 });
 
 exports.logIn = catchError(async (req, res, next) => {
-  const { email, password } = req.body;
-  if (!email || !password)
+  const { phone, password } = req.body;
+  if (!phone || !password)
     return next(new createError('Provide Credentials', 501));
-  const user = await User.findOne({ email }).select('password');
+  const user = await User.findOne({ phone }).select('password');
   const check = await user?.verifyPassword(password, user.password);
   if (!user || !check) return next(new createError('Invalid credentials', 400));
   createSendToken(user.id, res, 200, req, user);
