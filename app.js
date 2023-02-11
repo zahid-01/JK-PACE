@@ -28,7 +28,7 @@ app.use(
       'http://localhost:3000',
       'http://localhost:5000',
       'https://jkpace-poni.onrender.com',
-      'https://jk-pace-frontend-55bdf.firebaseapp.com',
+      'https://jkpace-jakega.web.app',
     ],
     credentials: true,
   })
