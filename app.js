@@ -28,9 +28,7 @@ app.use(
       'http://localhost:3000',
       'http://localhost:5000',
       'https://jkpace-poni.onrender.com',
-      'https://jkpace.netlify.app',
-      'https://radiant-torte-41dbd7.netlify.app',
-      'https://duffersolutions.com',
+      'https://jk-pace-frontend-55bdf.firebaseapp.com/',
     ],
     credentials: true,
   })
