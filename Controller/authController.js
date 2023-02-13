@@ -47,7 +47,7 @@ exports.logIn = catchError(async (req, res, next) => {
     return next(new createError('Provide Credentials', 501));
   const user = await User.findOne({ phone }).select('password');
   const check = await user?.verifyPassword(password, user.password);
-  if (!user || !check) return next(new createError('Invalid credentials', 400));
+  if (!user || !check) return next(new createError('Invalid credentials', 401));
   createSendToken(user.id, res, 200, req, user);
 });
 

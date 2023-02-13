@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "./static/css/main.776cb664.css",
-    "main.js": "./static/js/main.217f0318.js",
-    "static/media/pngwing.com.png": "./static/media/pngwing.com.1df212a2a5bcd3ee6d87.png",
-    "static/media/JaKeGa Logo.png": "./static/media/JaKeGa Logo.c063f2e14c171bf3b6e4.png",
-    "index.html": "./index.html",
-    "main.776cb664.css.map": "./static/css/main.776cb664.css.map",
-    "main.217f0318.js.map": "./static/js/main.217f0318.js.map"
+    "main.css": "/static/css/main.776cb664.css",
+    "main.js": "/static/js/main.158854ae.js",
+    "static/media/pngwing.com.png": "/static/media/pngwing.com.1df212a2a5bcd3ee6d87.png",
+    "static/media/JaKeGa Logo.png": "/static/media/JaKeGa Logo.c063f2e14c171bf3b6e4.png",
+    "index.html": "/index.html",
+    "main.776cb664.css.map": "/static/css/main.776cb664.css.map",
+    "main.158854ae.js.map": "/static/js/main.158854ae.js.map"
   },
   "entrypoints": [
     "static/css/main.776cb664.css",
-    "static/js/main.217f0318.js"
+    "static/js/main.158854ae.js"
   ]
 }
