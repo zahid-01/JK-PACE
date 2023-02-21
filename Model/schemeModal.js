@@ -1,12 +1,12 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const schemeSchema = new mongoose.Schema({
   schemeName: {
     type: String,
-    required: [true, "Scheme is requried"],
+    required: [true, 'Scheme is requried'],
   },
   AACostRevised: {
     type: Number,
-    required: [true, "Scheme is requried"],
+    required: [true, 'Scheme is requried'],
   },
   targetYearCompletion: {
     type: Date,
@@ -20,11 +20,11 @@ const schemeSchema = new mongoose.Schema({
   },
   fundsPropsedForYear: {
     type: Number,
-    required: [true, "Scheme is requried"],
+    required: [true, 'Scheme is requried'],
   },
   schemeCode: {
     type: String,
-    required: [true, "Scheme is requried"],
+    required: [true, 'Scheme is requried'],
   },
   projectApplicationYear: {
     type: Date,
@@ -33,23 +33,23 @@ const schemeSchema = new mongoose.Schema({
   },
   divisionBlock: {
     type: String,
-    required: [true, "Scheme is requried"],
+    required: [true, 'Scheme is requried'],
   },
   subDivisionVillage: {
     type: String,
-    required: [true, "Scheme is requried"],
+    required: [true, 'Scheme is requried'],
   },
   AACostOriginal: {
     type: Number,
-    required: [true, "Scheme is requried"],
+    required: [true, 'Scheme is requried'],
   },
   fundingModes: {
     type: String,
-    required: [true, "Scheme is requried"],
+    required: [true, 'Scheme is requried'],
   },
   assets: {
     type: String,
-    required: [true, "Scheme is requried"],
+    required: [true, 'Scheme is requried'],
   },
   outlay: {
     type: Date,
@@ -67,12 +67,16 @@ const schemeSchema = new mongoose.Schema({
   schemaStatus: {
     type: String,
     required: true,
-    enum: ["new", "ongoing"],
+    enum: ['new', 'ongoing'],
   },
   requestAuthority: String,
   officer: {
     type: mongoose.Schema.ObjectId,
-    ref: "users",
+    ref: 'users',
+  },
+  photo: {
+    type: String,
+    default: 'default.jpg',
   },
 });
 
@@ -82,11 +86,11 @@ schemeSchema.methods.inspOfficer = function (id) {
 
 schemeSchema.pre(/^find/, function (next) {
   this.populate({
-    path: "officer",
-    select: "-_id",
+    path: 'officer',
+    select: '-_id',
   });
   next();
 });
 
-const Scheme = mongoose.model("scheme", schemeSchema);
+const Scheme = mongoose.model('scheme', schemeSchema);
 module.exports = Scheme;

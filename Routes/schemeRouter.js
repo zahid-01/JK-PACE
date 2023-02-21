@@ -10,4 +10,12 @@ schemeRouter
   .post(schemeController.createScheme)
   .get(schemeController.getSchemes);
 
+schemeRouter
+  .route('/upload')
+  .post(
+    schemeController.uploadSchemePhoto,
+    schemeController.resizeSchemePhoto,
+    schemeController.schemeUploadPhoto
+  );
+
 module.exports = schemeRouter;
