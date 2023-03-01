@@ -29,6 +29,7 @@ app.use(
       'http://localhost:5000',
       'https://jkpace-poni.onrender.com',
       'https://jkpace-jakega.web.app',
+      'https://jkpace-launch.web.app',
     ],
     credentials: true,
   })
